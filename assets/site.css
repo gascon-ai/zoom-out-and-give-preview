@@ -1023,7 +1023,9 @@ body:has(.claim-section) .site-foot{padding-top:32px}
 .cs-step.is-done .n{text-decoration:none}
 .cs-step:disabled{cursor:default;opacity:.7}
 .cs-step:focus-visible{outline:3px solid var(--blue-200);border-radius:8px}
-@media (max-width:420px){.claim-steps{gap:6px}.cs-step{font-size:13.5px}.claim-steps .cs-line{flex-basis:24px}}
+.claim-steps a.cs-step{text-decoration:underline;text-underline-offset:3px}
+main .claim-steps a.cs-step::after{content:none}
+@media (max-width:520px){.claim-steps{gap:4px}.cs-step{font-size:12.5px;gap:5px;padding:6px 2px}.cs-step .n{width:22px;height:22px;font-size:12px}.claim-steps .cs-line{flex-basis:14px}}
 /* Oct 29: State dropdown drawn like the other fields (same height, border and focus), with the site's own chevron instead of the system one */
 .claim select{-webkit-appearance:none;appearance:none;min-height:52px;line-height:1.6;padding:12px 40px 12px 40px;background:var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230B2765' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center/16px 16px;cursor:pointer}
 .claim select:focus{outline:3px solid var(--blue-200);border-color:var(--blue-700)}
