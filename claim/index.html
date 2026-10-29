@@ -7,7 +7,7 @@
 <meta name="description" content="Finished the Zoom Out &amp; Give worksheet? Claim your gift.">
 <meta name="robots" content="noindex">
 <meta name="color-scheme" content="light">
-<link rel="stylesheet" href="../assets/site.css?v=forestalign">
+<link rel="stylesheet" href="../assets/site.css?v=sharetable">
 <style>
   /* On its own page the claim section starts right under the header */
   .claim-section{margin-top:0}
@@ -46,6 +46,23 @@
             <div class="f" data-field="takeaway">
               <textarea id="takeaway" name="takeaway" maxlength="600" required aria-labelledby="takeaway-q" aria-describedby="takeaway-help"></textarea>
               <span class="err">Add one line, even a short one.</span>
+            </div>
+          </fieldset>
+
+          <fieldset class="after-yes share-table">
+            <legend>Share your table.</legend>
+            <p class="help">We'd love to see how it went! Both are required, and our team reviews every claim before a hat ships.</p>
+            <div class="f" data-field="post">
+              <label for="post">Link to your post <span class="req">*</span></label>
+              <p class="help" id="post-help">Snap a moment from your sit-down, share it on LinkedIn or X, and tag Endaoment. Paste the link here.</p>
+              <input id="post" name="post" type="url" inputmode="url" autocomplete="off" maxlength="500" placeholder="https://www.linkedin.com/posts/..." required aria-describedby="post-help">
+              <span class="err">Paste the link to your LinkedIn or X post.</span>
+            </div>
+            <div class="f" data-field="photo">
+              <label for="photo">A photo from your table <span class="req">*</span></label>
+              <p class="help" id="photo-help">Your people, a cup of tea, the worksheet in progress. JPG or PNG, up to 5 MB.</p>
+              <input id="photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" required aria-describedby="photo-help">
+              <span class="err">Add a JPG or PNG photo, up to 5 MB.</span>
             </div>
           </fieldset>
 
@@ -92,7 +109,7 @@
           <div class="captcha-slot no-print after-yes" id="claim-captcha"></div>
           <div class="submit-row after-yes">
             <button class="btn btn-primary" type="submit" id="submit-btn">Send my gift</button>
-            <p class="privacy">We use your address only to send your gift. While supplies last.</p>
+            <p class="privacy">Our team reviews every claim before it ships, and we use your address only to send your gift. While supplies last.</p>
             <p class="form-msg" id="form-msg" role="alert" hidden></p>
           </div>
         </form>
@@ -133,6 +150,24 @@ const qs = new URLSearchParams(location.search);
 ["utm_source","utm_medium","utm_campaign","utm_content"].forEach(k => { const el = $(`[name=${k}]`); if (el) el.value = qs.get(k) || ""; });
 
 const form = $("#claim-form");
+/* Share your table: a LinkedIn or X post link and a photo, both required. The team reviews every claim before a hat ships. */
+const POST_URL = /^https:\/\/(?:[a-z0-9-]+\.)*(?:linkedin\.com|x\.com|twitter\.com)\/\S+$/i;
+const MAX_PHOTO_MB = 5;
+// The photo is shrunk on the device (longest side 1600px, JPEG) before it is sent, so the claim stays small.
+function shrinkPhoto(file){
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight));
+      const c = document.createElement("canvas"); c.width = Math.round(img.naturalWidth * scale); c.height = Math.round(img.naturalHeight * scale);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+      const data = c.toDataURL("image/jpeg", 0.85).split(",")[1];
+      data ? resolve({ type: "image/jpeg", data }) : reject(new Error("photo"));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("photo")); };
+    img.src = url;
+  });
+}
 /* Fill in the email they already used to send their plan (kept on this device only) */
 try { const e = localStorage.getItem("zog2026-email"); if (e && !form.elements.email.value) form.elements.email.value = e; } catch(e) {}
 function checkField(wrap){
@@ -141,6 +176,8 @@ function checkField(wrap){
   if (el.type === "radio") valid = wrap.dataset.field === "completed" ? form.elements.completed.value === "yes" : form.elements[el.name].value !== "";
   else if (el.type === "checkbox") valid = el.checked;
   else valid = el.checkValidity() && el.value.trim() !== "";
+  if (valid && el.id === "post") valid = POST_URL.test(el.value.trim());
+  if (valid && el.id === "photo") { const file = el.files[0]; valid = !!file && file.size <= MAX_PHOTO_MB * 1024 * 1024 && /^image\//.test(file.type || "image/"); }
   wrap.classList.toggle("invalid", !valid);
   el.setAttribute("aria-invalid", String(!valid));
   return valid ? null : el;
@@ -169,6 +206,13 @@ form.addEventListener("submit", async e => {
   const btn = $("#submit-btn"), label = btn.textContent; btn.disabled = true; btn.textContent = "Sending...";
   const data = Object.fromEntries(new FormData(form));
   data.secondsOnPage = Math.round((Date.now() - loadedAt) / 1000);
+  data.post = form.elements.post.value.trim();
+  try { data.photo = await shrinkPhoto(form.elements.photo.files[0]); }
+  catch(err) {
+    btn.disabled = false; btn.textContent = label;
+    $("[data-field=photo]").classList.add("invalid"); form.elements.photo.focus();
+    msg.textContent = "We couldn't read that photo. Try a JPG or PNG."; msg.hidden = false; return;
+  }
   let ok = false;
   try {
     const res = await fetch(CONFIG.claimUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
@@ -180,6 +224,6 @@ form.addEventListener("submit", async e => {
 });
 </script>
 <script>(()=>{const h=document.querySelector(".site-head");if(!h)return;const f=()=>h.classList.toggle("scrolled",scrollY>4);addEventListener("scroll",f,{passive:true});f();})();</script>
-<script src="../assets/edit-mode.js?v=forestalign"></script>
+<script src="../assets/edit-mode.js?v=sharetable"></script>
 </body>
 </html>

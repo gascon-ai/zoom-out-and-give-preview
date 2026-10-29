@@ -1002,6 +1002,14 @@ body:has(.claim-section) .site-foot{padding-top:32px}
   #worksheet .ws-intro .section-head p{max-width:680px;margin-left:auto;margin-right:auto}
 }
 
+/* Oct 29: Share your table on the claim page (post link + photo). The link field looks like the other fields; the photo picker is a dashed drop box. */
+.claim input[type=url]{border:1.5px solid var(--slate-400);border-radius:12px;font:inherit;font-size:16px;color:var(--blue-900);padding:12px;background:var(--white);width:100%;min-height:48px;text-align:center}
+.claim .share-table .f{display:grid;gap:6px;margin-top:14px}
+.claim .share-table .f .help{margin:0;font-size:14.5px}
+.claim input[type=file]{width:100%;font:inherit;font-size:15px;color:var(--blue-900);background:var(--white);border:1.5px dashed var(--slate-400);border-radius:12px;padding:14px;cursor:pointer}
+.claim input[type=file]::file-selector-button{font:inherit;font-weight:600;font-size:14px;color:var(--white);background:var(--blue-700);border:0;border-radius:999px;padding:8px 16px;margin-right:12px;cursor:pointer}
+.claim input[type=url]:focus,.claim input[type=file]:focus{outline:3px solid var(--blue-200);border-color:var(--blue-700)}
+
 /* Oct 26: The forest row. The first question now wraps to two lines, so the two cards share rows (question, nudge, box) and both answer boxes start at the same height. Side by side only. */
 @media (min-width:700px){
   .ws-cards:has(#q-right){grid-template-rows:auto auto 1fr;row-gap:0}
