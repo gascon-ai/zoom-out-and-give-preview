@@ -1033,7 +1033,8 @@ body:has(.claim-section) .site-foot{padding-top:32px}
 .more-card span{font-size:14.5px;color:var(--slate-700)}
 .more-card:hover{border-color:var(--blue-300, #9bb7f0)}
 .more-card:focus-visible{outline:3px solid var(--blue-200);outline-offset:2px}
-main a.more-card[target="_blank"]::after{content:none}
+main .more-grid a.more-card[target="_blank"]:not(.btn):not(.ex-save)::after{content:none;display:none}
+.more-card strong::after{content:"";display:inline-block;width:.8em;height:.8em;margin-left:6px;vertical-align:-.05em;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 17.5L17.5 6.5M17.5 6.5H9M17.5 6.5V15'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 17.5L17.5 6.5M17.5 6.5H9M17.5 6.5V15'/%3E%3C/svg%3E") center/contain no-repeat}
 @media (max-width:600px){.more-grid{grid-template-columns:1fr}}
 
 /* Oct 26: The forest row. The first question now wraps to two lines, so the two cards share rows (question, nudge, box) and both answer boxes start at the same height. Side by side only. */
