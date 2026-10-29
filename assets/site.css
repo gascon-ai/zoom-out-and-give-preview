@@ -1010,6 +1010,32 @@ body:has(.claim-section) .site-foot{padding-top:32px}
 .claim input[type=file]::file-selector-button{font:inherit;font-weight:600;font-size:14px;color:var(--white);background:var(--blue-700);border:0;border-radius:999px;padding:8px 16px;margin-right:12px;cursor:pointer}
 .claim input[type=url]:focus,.claim input[type=file]:focus{outline:3px solid var(--blue-200);border-color:var(--blue-700)}
 
+/* Oct 29: claim page in two steps. Step 2 (Share your table) replaces the form in place; the example post sits under the fields. */
+#claim-form[hidden],.share-step[hidden]{display:none!important}
+.share-step{display:grid;gap:14px;text-align:center}
+.share-step h2{font-family:var(--display);font-weight:700;font-size:28px;line-height:1.2;color:var(--blue-900);margin:0;outline:none}
+.share-step>.help{margin:0}
+.share-step form{display:grid;gap:18px;text-align:left}
+.share-step .f{display:grid;gap:6px}
+.share-step .f .help{margin:0;font-size:14.5px}
+.share-step .f>label,.share-step .f>.help{text-align:center}
+.share-step .share-card{margin:0}
+.share-step .share-need{font-weight:600;color:var(--blue-900);margin:0 0 4px}
+.share-step .submit-row{text-align:center}
+.share-step .edit-claim{justify-self:center;background:none;border:0;font:inherit;font-size:15px;color:var(--blue-700);text-decoration:underline;cursor:pointer;padding:6px}
+@media (max-width:600px){.share-step h2{font-size:23px}}
+/* Oct 29: thank-you page, read-more cards */
+.thanks .more{margin-top:28px;display:grid;gap:14px}
+.thanks .more h2{font-family:var(--display);font-weight:700;font-size:22px;color:var(--blue-900);margin:0}
+.more-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;text-align:left}
+.more-card{display:grid;gap:4px;background:var(--slate-050);border:1px solid var(--slate-100);border-radius:16px;padding:16px 18px;text-decoration:none;color:var(--blue-900)}
+.more-card strong{font-size:16px}
+.more-card span{font-size:14.5px;color:var(--slate-700)}
+.more-card:hover{border-color:var(--blue-300, #9bb7f0)}
+.more-card:focus-visible{outline:3px solid var(--blue-200);outline-offset:2px}
+main a.more-card[target="_blank"]::after{content:none}
+@media (max-width:600px){.more-grid{grid-template-columns:1fr}}
+
 /* Oct 26: The forest row. The first question now wraps to two lines, so the two cards share rows (question, nudge, box) and both answer boxes start at the same height. Side by side only. */
 @media (min-width:700px){
   .ws-cards:has(#q-right){grid-template-rows:auto auto 1fr;row-gap:0}
