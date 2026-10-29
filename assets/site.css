@@ -1024,6 +1024,8 @@ body:has(.claim-section) .site-foot{padding-top:32px}
 .cs-step:disabled{cursor:default;opacity:.7}
 .cs-step:focus-visible{outline:3px solid var(--blue-200);border-radius:8px}
 .claim-steps a.cs-step{text-decoration:underline;text-underline-offset:3px}
+.cs-step{white-space:nowrap}.cs-step .cs-short{display:none}
+@media (max-width:520px){.cs-step .cs-full{display:none}.cs-step .cs-short{display:inline}}
 main .claim-steps a.cs-step::after{content:none}
 @media (max-width:520px){.claim-steps{gap:4px}.cs-step{font-size:12.5px;gap:5px;padding:6px 2px}.cs-step .n{width:22px;height:22px;font-size:12px}.claim-steps .cs-line{flex-basis:14px}}
 /* Oct 29: State dropdown drawn like the other fields (same height, border and focus), with the site's own chevron instead of the system one */
