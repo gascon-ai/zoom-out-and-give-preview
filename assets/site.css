@@ -1015,6 +1015,15 @@ body:has(.claim-section) .site-foot{padding-top:32px}
 /* Oct 29: State dropdown drawn like the other fields (same height, border and focus), with the site's own chevron instead of the system one */
 .claim select{-webkit-appearance:none;appearance:none;min-height:52px;line-height:1.6;padding:12px 40px 12px 40px;background:var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230B2765' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center/16px 16px;cursor:pointer}
 .claim select:focus{outline:3px solid var(--blue-200);border-color:var(--blue-700)}
+/* Oct 29: photo picker, centered: the real file input sits underneath (still focusable), a styled label is what people see */
+.share-step .f .file-input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;padding:0;border:0}
+.share-step .file-pick{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;padding:18px 14px;border:1.5px dashed var(--slate-400);border-radius:12px;background:var(--white);cursor:pointer;text-align:center}
+.share-step .file-pick:hover{border-color:var(--blue-700)}
+.share-step .f:focus-within .file-pick{outline:3px solid var(--blue-200);border-color:var(--blue-700)}
+.share-step .file-btn{font-weight:600;font-size:15px;color:var(--white);background:var(--blue-700);border-radius:999px;padding:9px 20px}
+.share-step .file-name{font-size:14.5px;color:var(--slate-700);word-break:break-all}
+.share-step .f.invalid .file-pick{border-color:#c4321c}
+.share-step .f{position:relative}
 .share-step{display:grid;gap:14px;text-align:center}
 .share-step h2{font-family:var(--display);font-weight:700;font-size:28px;line-height:1.2;color:var(--blue-900);margin:0;outline:none}
 .share-step>.help{margin:0}
