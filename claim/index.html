@@ -7,7 +7,7 @@
 <meta name="description" content="Finished the Zoom Out &amp; Give worksheet? Claim your gift.">
 <meta name="robots" content="noindex">
 <meta name="color-scheme" content="light">
-<link rel="stylesheet" href="../assets/site.css?v=statefix">
+<link rel="stylesheet" href="../assets/site.css?v=photopick">
 <style>
   /* On its own page the claim section starts right under the header */
   .claim-section{margin-top:0}
@@ -120,7 +120,8 @@ Your turn: <span class="ex-link"></span> @Endaoment</p></div>
             <div class="f" data-field="photo">
               <label for="photo">A photo from your table <span class="req">*</span></label>
               <p class="help" id="photo-help">Your people, a cup of tea, the worksheet in progress. JPG or PNG, up to 5 MB.</p>
-              <input id="photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" required aria-describedby="photo-help">
+              <label class="file-pick" for="photo"><span class="file-btn">Choose a photo</span><span class="file-name" id="photo-name">No photo yet</span></label>
+              <input id="photo" name="photo" type="file" class="file-input" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" required aria-describedby="photo-help">
               <span class="err">Add a JPG or PNG photo, up to 5 MB.</span>
             </div>
             <div class="captcha-slot no-print" id="claim-captcha"></div>
@@ -233,6 +234,8 @@ function showStep(){
 }
 function showForm(){ step.hidden = true; form.hidden = false; form.scrollIntoView({ block: "start" }); }
 $("#edit-claim").addEventListener("click", showForm);
+/* Photo picker: show the chosen file name in the centered button */
+shareForm.elements.photo.addEventListener("change", e => { const f = e.target.files[0]; $("#photo-name").textContent = f ? f.name : "No photo yet"; });
 
 form.addEventListener("submit", e => {
   e.preventDefault();
@@ -295,6 +298,6 @@ shareForm.addEventListener("submit", async e => {
 });
 </script>
 <script>(()=>{const h=document.querySelector(".site-head");if(!h)return;const f=()=>h.classList.toggle("scrolled",scrollY>4);addEventListener("scroll",f,{passive:true});f();})();</script>
-<script src="../assets/edit-mode.js?v=statefix"></script>
+<script src="../assets/edit-mode.js?v=photopick"></script>
 </body>
 </html>
